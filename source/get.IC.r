@@ -1,0 +1,51 @@
+# This function computes information criteria DIC, WAIC-1 and WAIC-2 for a bts_survreg model
+get.IC = function(mod, samples = nrow(mod$par.X.bi[[1]]), cores = NULL){
+  if(is.null(cores)) cores = detectCores()
+  m.X = trim.mcmc(mod$par.X.all, burnin = round(nrow(as.matrix(mod$par.X.all[1]))/2)+1)
+  m.S = trim.mcmc(mod$par.S.all, burnin = round(nrow(as.matrix(mod$par.S.all[1]))/2)+1)
+  m.X = as.matrix(m.X)
+  m.S = as.matrix(m.S)
+  if(samples >  nrow(m.X)) {stop ('more samples than mcmc draws selected')}
+  
+  ncol.X= ncol(m.X)
+  ncol.S= ncol(m.S)
+  m.X[,ncol.X] = log(m.X[,ncol.X])
+  m.S[,ncol.S] = log(m.S[,ncol.S])
+  m = cbind(m.X,m.S)
+  m.s = m[sample(1:nrow(m), samples, replace=F),]
+  
+  cl    = makePSOCKcluster(cores)
+  clusterSetRNGStream(cl)
+  registerDoParallel(cl)
+  s = round(seq (1, samples, length.out = cores+1))
+  pst.mean = apply(m, 2, mean) 
+  
+  run = foreach(j = 1:cores # ndraws=rep(mc, cores)+1:cores
+                , .export = c('pdist', 'qdist', 'rdist', 'ddist', 'obsLL', 'f.c2', 'f.c3', 'obsLL.c',
+                              'ploglog', 'rloglog','qloglog', 'dloglog',
+                              'pllogis', 'rllogis', 'dllogis', 'qllogis', 'trans.par' )
+                               
+  ) %dopar% {
+    m.s.cores = m.s[s[j]:(s[j+1]-1),]
+    out = apply(m.s.cores,1, function(x) obsLL(x, dat=mod$dat, Z.X = mod$Z.X, Z.S = mod$Z.S, dist.X=mod$dist.X, 
+                                            dist.S=mod$dist.S, log.scale = F, sum=F) ) 
+  }
+  stopCluster(cl)
+  
+  run = do.call(cbind, run)
+  
+  lppd = sum (log(apply(run,1, mean)))
+  q1   = sum (apply( log(run), 1, mean))
+  q2   = sum( apply( log(run), 1, var) )
+  q3   = mean( apply( log(run),2, sum) )
+  q4   = sum(obsLL(pst.mean, dat=mod$dat, Z.X = mod$Z.X, Z.S = mod$Z.S, dist.X=mod$dist.X, 
+                   dist.S=mod$dist.S, log.scale = T, sum=F))
+  DIC  = -2* ( q4 - 2*(q4-q3) )
+  WAIC1    = -2*(-lppd + 2*q1)
+  WAIC2    = -2*(lppd - q2)
+  mat=matrix(nrow=1, ncol=3)
+  mat[1,]=c(WAIC1, WAIC2, DIC)
+  colnames(mat) = c('WAIC1', 'WAIC2', 'DIC')
+  mat
+}
+
