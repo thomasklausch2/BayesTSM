@@ -167,19 +167,20 @@ pre code {
 </div>
 
 
-<div id="bayes3s" class="section level1">
-<h1>bayes3S</h1>
-<p><strong>Bayesian 3-state chain of events AFT survival model for screening outcomes.</strong></p>
+<div id="bayestsm" class="section level1">
+<h1>bayesTSM</h1>
+<p><strong>Bayesian 3-state AFT model for screening outcomes.</strong></p>
 <p>Please note:</p>
 <ul>
+<li>This ‘package’ currently is a collection of functions. We plan to publish an <code>R</code> <code>package</code> soon.</li>
 <li>The main function is <code>bts_survreg</code></li>
 <li>Use Rstudio project or define working directory path</li>
 <li>To load all functions required <code>source</code> path <code>/controllers/startup.r</code></li>
-<li>For a demosntration of the Bayesian model estimation by Gibbs check the <code>demo_MCMC.r</code> with demonstrations of <code>bts_survreg</code> using simulated data</li>
+<li>For a demonstration of the Bayesian model estimation by Gibbs check the <code>demo_MCMC.r</code> with demonstrations of <code>bts_survreg</code> using simulated data</li>
 <li>For a demonstration of the EM algorithm for the lognormal-lognormal model, see <code>demo_EM.r</code></li>
 <li>The <code>foreach</code> package is used for parallel and sequential processing. If your system is incompatible with <code>foreach</code> consider using the <code>bts_survreg_seq</code> function instead which uses a <code>for</code> loop insead (can be slow).</li>
 </ul>
-<p><strong>Author information:</strong> Thomas Klausch (<a href="mailto:t.klausch@amsterdamumc.nl" class="email">t.klausch@amsterdamumc.nl</a>). Reference as: Klausch, T., Akwiwu, E. U., van de Wiel, M. A., Coupé, V. M. H., Berkhof, J. (2021). A Bayesian accelerated failure time model for interval-censored three-state screening outcomes. Available under: <a href="https://arxiv.org/abs/2110.02649" class="uri">https://arxiv.org/abs/2110.02649</a></p>
+<p><strong>Author information:</strong> Thomas Klausch (<a href="mailto:t.klausch@amsterdamumc.nl" class="email">t.klausch@amsterdamumc.nl</a>). Reference as: Klausch, T., Akwiwu, E. U., van de Wiel, M. A., Coupé, V. M. H., Berkhof, J. (2021). A Bayesian accelerated failure time model for interval censored three-state screening outcomes. Available under: <a href="https://arxiv.org/abs/2110.02649" class="uri">https://arxiv.org/abs/2110.02649</a></p>
 <p><strong>License</strong>: This product is provided under a creative commons license: Attribution-NonCommercial-ShareAlike CC BY-NC-SA.</p>
 <p><strong>Important note</strong>: Throughout the code and output, the annotation <code>X</code> is used for the time from state 1 to state 2 and <code>S</code> is used for the time from state 2 to state 3. In the accompanying main paper the notation <span class="math inline">\(x\)</span> and <span class="math inline">\(t\)</span> are used for these times, respectively. Letters <code>t</code> and <code>T</code> are problematic to use in <code>R</code> as they have frequently used other definitions. To avoid conflicts the notation <code>S</code> is used throughout.</p>
 </div>
