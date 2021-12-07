@@ -4,7 +4,7 @@
 
 Please note:
 
-* This 'package' currently is a collection of functions. We plan to publish an `R` `package` soon.
+* This 'package' currently is a collection of functions. We plan to publish an `R` `library` soon.
 * The main function is `bts_survreg`
 * Use Rstudio project or define working directory path
 * To load all functions required  `source` path `/controllers/startup.r`
