@@ -1,0 +1,36 @@
+Package: BayesTSM
+Title: Bayesian Progressive Three State Model With Censoring due to Intervention
+Version: 1.0
+Authors@R: 
+    person("Thomas", "Klausch", , "t.klausch@amsterdamumc.nl", role = c("aut", "cre"))
+Description: Estimates a Bayesian progressive Three State Model with censoring due to intervention as described in Klausch et al. (2023) <https://doi.org/10.1214/22-AOAS1669>.
+License: MIT + file LICENSE
+URL: https://github.com/thomasklausch2/bayestsm
+BugReports: https://github.com/thomasklausch2/bayestsm/issues
+Encoding: UTF-8
+Imports: 
+  actuar,
+  coda,
+  doParallel,
+  foreach,
+  graphics,
+  ggplot2,
+  MASS,
+  MCMCpack,
+  mvtnorm,
+  parallel,
+  posterior,
+  Rcpp,
+  rlang,
+  survival
+LinkingTo:
+  Rcpp
+Depends: 
+  R (>= 3.5.0)
+Roxygen: list(markdown = TRUE)
+Config/roxygen2/version: 8.0.0
+Suggests:
+    knitr,
+    rmarkdown,
+    bookdown
+VignetteBuilder: knitr
