@@ -10,11 +10,12 @@ The package models the latent transition time from baseline to state 2, denoted 
 
 `BayesTSM` uses accelerated failure time models for both transition times,
 
-\[
-\log X_i = z_{Xi}^\top \beta_X + \sigma_X \epsilon_i,
-\qquad
-\log S_i = z_{Si}^\top \beta_S + \sigma_S \xi_i,
-\]
+$$
+\begin{aligned}
+\log X_i &= z_{Xi}^{\top}\beta_X + \sigma_X \epsilon_i, \\
+\log S_i &= z_{Si}^{\top}\beta_S + \sigma_S \xi_i .
+\end{aligned}
+$$
 
 and estimates the model using Bayesian data augmentation and MCMC. Weibull, lognormal, and log-logistic transition time distributions are currently available.
 
